@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arte &amp; Direito · Aguillera</title>
+  <meta name="description" content="Arte e Direito, por Jocsan Aguillera: citações, duelos filosóficos e os grandes livros que formaram a ideia de justiça — de Platão a Montesquieu.">
+  <meta name="theme-color" content="#05030f">
+  <meta property="og:title" content="Arte & Direito · Aguillera">
+  <meta property="og:description" content="Citações, duelos jurídicos e os livros clássicos que inventaram a justiça.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://aguillera.art.br/">
+  <link rel="canonical" href="https://aguillera.art.br/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="travado">
+
+  <!-- Portão: o navegador só libera som depois de um clique -->
+  <div class="portao" id="portao">
+    <p class="marca">Aguillera · Arte &amp; Direito</p>
+    <p>Aumente o volume</p>
+    <button class="entrar" id="entrar">▶ Entrar</button>
+    <button class="sem-som" id="sem-som">entrar sem som</button>
+  </div>
+  <button class="pular" id="pular">Pular abertura ⏭</button>
+
+  <nav class="nav" aria-label="Principal">
+    <a class="nav-marca" href="#topo">AGUILLERA <span>·</span> ARTE &amp; DIREITO</a>
+    <ul>
+      <li><a href="#citacoes">Citações</a></li>
+      <li><a href="#duelo">Duelo</a></li>
+      <li><a href="#biblioteca">Biblioteca</a></li>
+      <li><a href="#simbolos">Símbolos</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <button class="botao-som" id="botao-som" aria-pressed="false">🔊 Som</button>
+  </nav>
+
+  <!-- ============ ABERTURA ============ -->
+  <header class="cena" id="topo">
+    <canvas class="estrelas" id="estrelas" aria-hidden="true"></canvas>
+    <div class="raios" aria-hidden="true"></div>
+    <div class="sol" aria-hidden="true"></div>
+    <div class="planeta" aria-hidden="true"></div>
+    <div class="flash" id="flash" aria-hidden="true"></div>
+
+    <div class="cena-titulo">
+      <p class="pre">Uma odisseia pela justiça</p>
+      <h1>
+        <span class="palavra p1 arco-texto">ARTE</span><span class="palavra p2 e">&amp;</span><span class="palavra p3 arco-texto">DIREITO</span>
+      </h1>
+      <p class="nome">Jocsan Aguillera</p>
+      <p class="cit">“Para que não se possa abusar do poder, é preciso que, pela disposição das coisas, o poder freie o poder.”<small>Montesquieu · O Espírito das Leis, 1748</small></p>
+    </div>
+    <a class="descer" href="#citacoes">Descer</a>
+  </header>
+
+  <main>
+    <!-- ============ CITAÇÕES ============ -->
+    <section class="citacoes" id="citacoes">
+      <div class="embrulho">
+        <p class="sobretitulo">Vozes que atravessam os séculos</p>
+        <h2 class="titulo-secao revela">A justiça em <span class="arco-texto">uma frase</span></h2>
+        <div class="carrossel revela" id="carrossel" aria-live="polite"></div>
+        <div class="controles">
+          <button class="seta" id="cit-ant" aria-label="Citação anterior">←</button>
+          <button class="seta" id="cit-prox" aria-label="Próxima citação">→</button>
+          <div class="pontos" id="cit-pontos"></div>
+        </div>
+        <p class="nota">Traduções livres, feitas para este site a partir dos textos originais em domínio público.</p>
+      </div>
+    </section>
+
+    <!-- ============ DUELO ============ -->
+    <section class="duelo" id="duelo">
+      <div class="embrulho">
+        <p class="sobretitulo">Cinco rodadas · você decide</p>
+        <h2 class="titulo-secao revela">Duelo <span class="arco-texto">jurídico</span></h2>
+        <p class="lead revela">Dois pensadores, uma pergunta. Escolha o argumento que vence — depois veja de que lado ficou a Constituição de 1988.</p>
+
+        <div class="arena revela" id="arena">
+          <div class="placar">
+            <span class="rodada-num" id="rodada-num">RODADA 1 / 5</span>
+            <span>Você e a Constituição concordaram: <b id="acertos">0</b></span>
+          </div>
+
+          <div id="jogo">
+            <h3 class="questao" id="questao"></h3>
+            <div class="lutadores">
+              <article class="lutador a" id="lut-a">
+                <span class="ko">K.O.</span>
+                <header>
+                  <div class="avatar" id="av-a"></div>
+                  <div><h3 id="nome-a"></h3><p class="papel" id="papel-a"></p></div>
+                </header>
+                <div class="vida"><i id="vida-a"></i></div>
+                <p class="argumento" id="arg-a"></p>
+                <button class="escolher" data-lado="a">Este vence ⚔</button>
+              </article>
+              <div class="vs">VS</div>
+              <article class="lutador b" id="lut-b">
+                <span class="ko">K.O.</span>
+                <header>
+                  <div class="avatar" id="av-b"></div>
+                  <div><h3 id="nome-b"></h3><p class="papel" id="papel-b"></p></div>
+                </header>
+                <div class="vida"><i id="vida-b"></i></div>
+                <p class="argumento" id="arg-b"></p>
+                <button class="escolher" data-lado="b">Este vence ⚔</button>
+              </article>
+            </div>
+            <div class="veredito" id="veredito">
+              <h4>⚖ Veredito da Constituição</h4>
+              <p id="veredito-texto"></p>
+              <p class="fundamento" id="veredito-base"></p>
+              <button class="proxima" id="proxima">Próxima rodada →</button>
+            </div>
+          </div>
+
+          <div class="final" id="final">
+            <div class="toga">⚖️</div>
+            <h3 id="final-titulo"></h3>
+            <p id="final-texto"></p>
+            <button class="proxima" id="recomecar">Duelar de novo ↺</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BIBLIOTECA ============ -->
+    <section class="biblioteca" id="biblioteca">
+      <div class="embrulho">
+        <p class="sobretitulo">A estante essencial</p>
+        <h2 class="titulo-secao revela">Os livros que <span class="arco-texto">inventaram a justiça</span></h2>
+        <p class="lead revela">Clique em um livro para abrir a ficha: a ideia central, por que ele ainda pesa no Direito de hoje e onde ler de graça.</p>
+        <div class="filtros" id="filtros">
+          <button class="ativo" data-f="todos">Todos</button>
+          <button data-f="filosofia">Filosofia</button>
+          <button data-f="literatura">Literatura</button>
+          <button data-f="brasil">Brasil</button>
+        </div>
+        <div class="estante" id="estante"></div>
+      </div>
+    </section>
+
+    <dialog class="ficha" id="ficha">
+      <div class="topo" id="ficha-topo">
+        <h3 id="ficha-titulo"></h3>
+        <p id="ficha-autor"></p>
+        <button class="fechar" id="ficha-fechar" aria-label="Fechar">✕</button>
+      </div>
+      <div class="corpo">
+        <h4>A ideia central</h4>
+        <p id="ficha-ideia"></p>
+        <h4>No Direito de hoje</h4>
+        <p id="ficha-hoje"></p>
+        <h4>Uma frase</h4>
+        <p class="frase" id="ficha-frase"></p>
+        <a class="ler" id="ficha-ler" href="#" target="_blank" rel="noopener">Ler grátis (domínio público) ↗</a>
+      </div>
+    </dialog>
+
+    <!-- ============ SÍMBOLOS & LINHA DO TEMPO ============ -->
+    <section class="simbolos" id="simbolos">
+      <div class="embrulho">
+        <p class="sobretitulo">A justiça como obra de arte</p>
+        <h2 class="titulo-secao revela">Por que a Justiça <span class="arco-texto">usa venda?</span></h2>
+        <p class="lead revela">Cada elemento da estátua de Têmis é um argumento jurídico esculpido em pedra.</p>
+
+        <div class="grade-simbolos">
+          <article class="simbolo revela" style="--cor: var(--ouro)">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#ffb020" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 8v48M18 56h28M12 18h40M12 18 4 36h16zM52 18l-8 18h16z"/><path d="M4 36a8 5 0 0 0 16 0M44 36a8 5 0 0 0 16 0"/></svg>
+            <h3>A balança</h3>
+            <p>O equilíbrio entre as partes. Os dois pratos lembram que ninguém é julgado sem ser ouvido — é o contraditório, hoje no art. 5º, LV, da Constituição.</p>
+          </article>
+          <article class="simbolo revela" style="--cor: var(--magenta)">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#ff3d8b" stroke-width="3" stroke-linecap="round" aria-hidden="true"><circle cx="32" cy="30" r="18"/><path d="M10 28h44M14 28c0 6 6 8 10 8s6-4 8-4 4 4 8 4 10-2 10-8"/></svg>
+            <h3>A venda</h3>
+            <p>Surgiu no fim do século XV como sátira — uma Justiça cega, que não enxergava nada. No século XVI virou virtude: julgar sem olhar a quem.</p>
+          </article>
+          <article class="simbolo revela" style="--cor: var(--ciano)">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M32 4l5 8v30h-10V12z"/><path d="M20 42h24M32 42v14M26 58h12"/></svg>
+            <h3>A espada</h3>
+            <p>A decisão precisa ser cumprida. Sem espada, a balança é só opinião; sem balança, a espada é só força. O Direito vive da tensão entre as duas.</p>
+          </article>
+        </div>
+
+        <div class="linha-tempo revela">
+          <h3>De Hamurabi a 1988, em nove saltos</h3>
+          <div class="trilho" id="trilho"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ CONTATO ============ -->
+  <footer class="rodape" id="contato">
+    <div class="embrulho">
+      <div class="grade">
+        <div>
+          <h2>Vamos conversar sobre <span class="arco-texto">arte e direito</span>?</h2>
+          <p>Palestras, aulas, textos e parcerias culturais.</p>
+          <p><a class="contato-email" href="mailto:jocsan@aguillera.art.br">jocsan@aguillera.art.br</a></p>
+        </div>
+        <div>
+          <p><strong>Jocsan Aguillera</strong><br>Advogado · OAB/MS nº 18.115<br>Corumbá — Mato Grosso do Sul</p>
+        </div>
+      </div>
+      <p class="aviso">
+        Espaço de conteúdo cultural e educativo. As informações aqui não constituem consulta nem orientação jurídica para casos concretos.<br>
+        A música de abertura é uma interpretação sintetizada no próprio navegador de <em>Assim falou Zaratustra</em> (Richard Strauss, 1896), obra em domínio público. As citações são traduções livres de obras em domínio público. As imagens são ilustrações originais. Este site não tem vínculo com nenhum filme ou estúdio.<br>
+        © <span id="ano"></span> Jocsan Aguillera.
+      </p>
+    </div>
+  </footer>
+
+  <script src="musica.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
