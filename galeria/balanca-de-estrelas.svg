@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 618" role="img" aria-label="Balança de estrelas">
+  <defs>
+    <linearGradient id="ceu" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset="1" stop-color="#140f33"/></linearGradient>
+    <radialGradient id="estrela"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+    <filter id="g" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="1000" height="618" fill="url(#ceu)"/>
+  <g fill="url(#estrela)">
+    <circle cx="60" cy="60" r="3"/><circle cx="930" cy="110" r="2.5"/><circle cx="500" cy="40" r="2"/><circle cx="820" cy="560" r="2"/><circle cx="140" cy="500" r="2.5"/><circle cx="700" cy="70" r="1.5"/><circle cx="300" cy="90" r="1.5"/>
+  </g>
+  <g fill="none" stroke="#f3f0ff" stroke-width="2.5" stroke-linecap="round" filter="url(#g)">
+    <path d="M500 120v380M420 500h160M260 200h480"/>
+    <path d="M260 200v150M740 200v150"/>
+  </g>
+  <g fill="none" stroke="#22d3ee" stroke-width="1.5" filter="url(#g)">
+    <path d="M180 350h160a80 45 0 0 1 -160 0z"/>
+    <path d="M660 350h160a80 45 0 0 1 -160 0z"/>
+  </g>
+  <g stroke="#ffb020" stroke-width="1" opacity=".9" filter="url(#g)">
+    <path d="M205 330l30 -22l28 18l25 -30" fill="none"/>
+    <path d="M690 335l25 -28l30 12l28 -24" fill="none"/>
+    <g fill="#ffe08a"><circle cx="205" cy="330" r="3"/><circle cx="235" cy="308" r="4"/><circle cx="263" cy="326" r="3"/><circle cx="288" cy="296" r="4.5"/><circle cx="690" cy="335" r="3"/><circle cx="715" cy="307" r="4"/><circle cx="745" cy="319" r="3"/><circle cx="773" cy="295" r="4.5"/></g>
+  </g>
+</svg>

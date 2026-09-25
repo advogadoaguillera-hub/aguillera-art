@@ -8,6 +8,10 @@ Site cultural de Jocsan Aguillera (OAB/MS nº 18.115). É um site estático: HTM
 | `style.css` | Cores, fontes e animações |
 | `app.js` | Citações, duelo, biblioteca e linha do tempo. **Os textos ficam nos blocos `DADOS`, no topo do arquivo.** |
 | `musica.js` | A abertura musical, tocada ao vivo pelo navegador |
+| `conteudo.js` | **O que você edita para postar:** vídeos, imagens e ensaios. Veja o [GUIA-DE-USO.md](GUIA-DE-USO.md) |
+| `secoes.js` | Monta o Cinema, a Galeria, as Ideias, a newsletter e o menu do celular a partir do `conteudo.js` |
+| `galeria/` | As imagens da galeria |
+| `ideias/` | Os textos dos ensaios, um arquivo `.md` por texto |
 | `tools/servidor-local.ps1` | Serve para ver o site no seu computador (`http://localhost:8110`). A hospedagem não usa esse arquivo. |
 
 ## Situação do domínio (verificada em 22/09/2026)

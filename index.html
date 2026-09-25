@@ -36,14 +36,20 @@
 
   <nav class="nav" aria-label="Principal">
     <a class="nav-marca" href="#topo">AGUILLERA <span>·</span> ARTE &amp; DIREITO</a>
-    <ul>
+    <ul id="menu">
+      <li><a href="#cinema">Cinema</a></li>
       <li><a href="#citacoes">Citações</a></li>
       <li><a href="#duelo">Duelo</a></li>
+      <li><a href="#galeria">Galeria</a></li>
       <li><a href="#biblioteca">Biblioteca</a></li>
+      <li><a href="#ideias">Ideias</a></li>
       <li><a href="#simbolos">Símbolos</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
-    <button class="botao-som" id="botao-som" aria-pressed="false">🔊 Som</button>
+    <div class="nav-acoes">
+      <button class="botao-som" id="botao-som" aria-pressed="false">🔊 Som</button>
+      <button class="hamburguer" id="hamburguer" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu"><span></span><span></span><span></span></button>
+    </div>
   </nav>
 
   <!-- ============ ABERTURA ============ -->
@@ -67,6 +73,17 @@
   </header>
 
   <main>
+    <!-- ============ CINEMA DA JUSTIÇA ============ -->
+    <section class="cinema" id="cinema">
+      <div class="embrulho">
+        <p class="sobretitulo">Filmes curtos · para quem nunca abriu um código</p>
+        <h2 class="titulo-secao revela">Cinema da <span class="arco-texto">Justiça</span></h2>
+        <p class="lead revela">Histórias de quatro minutos sobre como a justiça funciona de verdade — feitas com inteligência artificial, com personagens inventados e ideias reais.</p>
+        <div class="destaque revela" id="video-destaque"></div>
+        <div class="fila revela" id="video-fila"></div>
+      </div>
+    </section>
+
     <!-- ============ CITAÇÕES ============ -->
     <section class="citacoes" id="citacoes">
       <div class="embrulho">
@@ -138,6 +155,16 @@
       </div>
     </section>
 
+    <!-- ============ GALERIA ============ -->
+    <section class="galeria" id="galeria">
+      <div class="embrulho">
+        <p class="sobretitulo">Imagens e artes</p>
+        <h2 class="titulo-secao revela">Galeria</h2>
+        <p class="lead revela">A justiça desenhada. Toque em uma obra para vê-la em tela cheia.</p>
+        <div class="mosaico revela" id="mosaico"></div>
+      </div>
+    </section>
+
     <!-- ============ BIBLIOTECA ============ -->
     <section class="biblioteca" id="biblioteca">
       <div class="embrulho">
@@ -169,6 +196,33 @@
         <p class="frase" id="ficha-frase"></p>
         <a class="ler" id="ficha-ler" href="#" target="_blank" rel="noopener">Ler grátis (domínio público) ↗</a>
       </div>
+    </dialog>
+
+    <!-- ============ IDEIAS ============ -->
+    <section class="ideias" id="ideias">
+      <div class="embrulho">
+        <p class="sobretitulo">Ensaios curtos</p>
+        <h2 class="titulo-secao revela">Ideias</h2>
+        <p class="lead revela">Críticas e reflexões sobre como o Direito é feito — e como poderia ser.</p>
+        <div class="ensaios revela" id="ensaios"></div>
+      </div>
+    </section>
+
+    <!-- leitor de ensaios -->
+    <dialog class="leitor" id="leitor">
+      <button class="fechar" id="leitor-fechar" aria-label="Fechar">✕</button>
+      <article class="leitor-corpo" id="leitor-corpo"></article>
+    </dialog>
+
+    <!-- tela cheia da galeria -->
+    <dialog class="tela-cheia" id="tela-cheia">
+      <button class="fechar" id="tela-fechar" aria-label="Fechar">✕</button>
+      <button class="tela-seta ant" id="tela-ant" aria-label="Anterior">←</button>
+      <figure>
+        <img id="tela-img" alt="">
+        <figcaption><strong id="tela-titulo"></strong><span id="tela-legenda"></span></figcaption>
+      </figure>
+      <button class="tela-seta prox" id="tela-prox" aria-label="Próxima">→</button>
     </dialog>
 
     <!-- ============ SÍMBOLOS & LINHA DO TEMPO ============ -->
@@ -215,6 +269,14 @@
         </div>
         <div>
           <p><strong>Jocsan Aguillera</strong><br>Advogado · OAB/MS nº 18.115<br>Corumbá — Mato Grosso do Sul</p>
+          <form class="boletim" id="boletim" novalidate>
+            <label for="boletim-email">Receba os novos filmes e ensaios</label>
+            <div class="boletim-campo">
+              <input type="email" id="boletim-email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+              <button type="submit">Quero</button>
+            </div>
+            <small id="boletim-nota">Sem spam. Um e-mail a cada novidade, e só.</small>
+          </form>
         </div>
       </div>
       <p class="aviso">
@@ -227,5 +289,7 @@
 
   <script src="musica.js"></script>
   <script src="app.js"></script>
+  <script src="conteudo.js"></script>
+  <script src="secoes.js"></script>
 </body>
 </html>
