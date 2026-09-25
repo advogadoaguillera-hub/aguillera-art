@@ -156,6 +156,38 @@ const MARCOS = [
 ];
 
 /* ==========================================================================
+   0. Assinatura áurea — a espiral de Fibonacci
+   r = r0 · φ^(θ / 90°): a cada quarto de volta o raio cresce 1,618 vezes.
+   ========================================================================== */
+const PHI = (1 + Math.sqrt(5)) / 2;
+function caminhoEspiral(voltas, raioFinal) {
+  const thetaMax = voltas * 2 * Math.PI;
+  const r0 = raioFinal / Math.pow(PHI, thetaMax / (Math.PI / 2));
+  const pontos = [];
+  for (let t = 0; t <= thetaMax; t += Math.PI / 36) {
+    const r = r0 * Math.pow(PHI, t / (Math.PI / 2));
+    pontos.push(`${(r * Math.cos(t)).toFixed(2)},${(r * Math.sin(t)).toFixed(2)}`);
+  }
+  return 'M' + pontos.join(' L');
+}
+(function espiral() {
+  const NS = 'http://www.w3.org/2000/svg';
+  const grande = document.getElementById('espiral');
+  if (grande) {
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', caminhoEspiral(3.25, 480));
+    grande.append(p);
+  }
+  document.querySelectorAll('.sobretitulo').forEach((el) => {
+    const s = document.createElementNS(NS, 'svg');
+    s.setAttribute('viewBox', '-11 -11 22 22'); s.setAttribute('class', 'glifo'); s.setAttribute('aria-hidden', 'true');
+    const p = document.createElementNS(NS, 'path');
+    p.setAttribute('d', caminhoEspiral(1.75, 9.5));
+    s.append(p); el.prepend(s);
+  });
+})();
+
+/* ==========================================================================
    1. Céu estrelado
    ========================================================================== */
 (function ceu() {
