@@ -109,7 +109,7 @@ window.CONTEUDO = {
                   páginas e origem. Sem cookies.
      --------------------------------------------------------------------- */
   medicao: {
-    umami: '',
+    umami: '31c1da8b-d9c7-4291-9fe6-c475cef2140a',
     cloudflare: '',
   },
 };

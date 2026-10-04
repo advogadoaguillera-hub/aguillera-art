@@ -212,6 +212,7 @@
     if (m.umami) {
       const s = el('script'); s.defer = true;
       s.src = 'https://cloud.umami.is/script.js'; s.dataset.websiteId = m.umami;
+      s.dataset.domains = 'aguillera.art.br'; // testes no computador não entram na contagem
       document.head.append(s);
     }
     if (m.cloudflare) {
