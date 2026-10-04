@@ -96,4 +96,20 @@ window.CONTEUDO = {
     url: '',
     email: 'jocsan@aguillera.art.br',
   },
+
+  /* ---------------------------------------------------------------------
+     MEDIÇÃO · quantas pessoas visitam e onde clicam
+     ---------------------------------------------------------------------
+     Vazio = o site não mede nada. Preencha UM dos dois para ligar.
+
+     umami      : código do site no Umami (umami.is). Mostra visitas E
+                  cliques: qual filme tocaram, qual ensaio abriram, qual
+                  livro, quem terminou o duelo. Sem cookies.
+     cloudflare : token do Cloudflare Web Analytics. Mostra só visitas,
+                  páginas e origem. Sem cookies.
+     --------------------------------------------------------------------- */
+  medicao: {
+    umami: '',
+    cloudflare: '',
+  },
 };

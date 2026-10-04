@@ -204,6 +204,45 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fechar(); });
   })();
 
+  /* ---------------------------------------------------------------------
+     6. Medição — só liga se houver um código em conteudo.js; sem cookies
+     --------------------------------------------------------------------- */
+  (function medicao() {
+    const m = C.medicao || {};
+    if (m.umami) {
+      const s = el('script'); s.defer = true;
+      s.src = 'https://cloud.umami.is/script.js'; s.dataset.websiteId = m.umami;
+      document.head.append(s);
+    }
+    if (m.cloudflare) {
+      const s = el('script'); s.defer = true;
+      s.src = 'https://static.cloudflareinsights.com/beacon.min.js';
+      s.dataset.cfBeacon = JSON.stringify({ token: m.cloudflare });
+      document.head.append(s);
+    }
+    // registra um clique com nome legível; não faz nada se a medição estiver desligada
+    const medir = (nome, dados) => { try { window.umami && window.umami.track(nome, dados); } catch (e) {} };
+    const texto = (raiz, sel) => { const x = raiz && raiz.querySelector(sel); return x ? x.textContent.trim() : ''; };
+    document.addEventListener('click', (ev) => {
+      const t = ev.target.closest('button, a'); if (!t) return;
+      if (t.id === 'entrar') return medir('abertura: entrou com som');
+      if (t.id === 'sem-som') return medir('abertura: entrou sem som');
+      if (t.id === 'pular') return medir('abertura: pulou');
+      if (t.matches('.play')) return medir('filme: assistiu', { titulo: texto(t.closest('.filme'), 'h3') });
+      if (t.matches('.obra')) return medir('galeria: abriu', { titulo: texto(t, 'strong') });
+      if (t.matches('.ensaio')) return medir('ensaio: abriu', { titulo: texto(t, 'strong') });
+      if (t.matches('.livro')) return medir('livro: abriu', { titulo: texto(t, '.t') });
+      if (t.matches('.ler[href]')) return medir('livro: foi ler', { titulo: texto(document, '#ficha-titulo') });
+      if (t.matches('.escolher')) return medir('duelo: votou', { em: texto(t.closest('.lutador'), 'h3') });
+      if (t.id === 'recomecar') return medir('duelo: jogou de novo');
+      if (t.id === 'proxima' && /resultado/i.test(t.textContent)) return medir('duelo: terminou');
+      if (t.matches('#menu a')) return medir('menu: ' + t.textContent.trim());
+      if (t.matches('.contato-email')) return medir('contato: clicou no e-mail');
+    });
+    const form = $('boletim');
+    if (form) form.addEventListener('submit', () => medir('newsletter: enviou'));
+  })();
+
   // as seções novas também entram com a revelação ao rolar
   if (window.IntersectionObserver) {
     const obs = new IntersectionObserver((es) => es.forEach((e) => {

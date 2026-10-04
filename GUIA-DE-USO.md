@@ -123,7 +123,18 @@ Quando quiser cadastro automático, crie uma lista numa ferramenta de envio (o *
 
 ---
 
-## 6. Regras da casa (para não quebrar nada)
+## 6. Ver quem visita e onde clicam
+
+O site já está preparado para medir; falta só a chave. No fim do `conteudo.js` há o bloco `medicao`, com dois campos vazios. Preencha **um**:
+
+- **`umami`** (recomendado) — crie uma conta grátis em **umami.is**, clique em *Add website*, digite `aguillera.art.br` e copie o **Website ID** (um código longo com hífens). Cole entre as aspas. O painel do Umami passa a mostrar visitas por dia, cidade, aparelho, de onde vieram **e os cliques com nome**: "filme: assistiu — O Processo", "ensaio: abriu — …", "livro: abriu — …", "duelo: terminou", "newsletter: enviou".
+- **`cloudflare`** — só visitas, páginas e origem; não mostra cliques.
+
+Nenhum dos dois usa cookies, então o site continua sem banner. Nenhum mostra **nome** de visitante: isso nenhuma ferramenta legítima entrega.
+
+---
+
+## 7. Regras da casa (para não quebrar nada)
 
 - **Aspas.** Todo texto fica entre aspas simples: `'assim'`. Se o texto tiver apóstrofo (d'água), use aspas duplas: `"d'água"`.
 - **Vírgulas.** Cada linha termina com vírgula, inclusive a última antes do `},`.
@@ -131,7 +142,7 @@ Quando quiser cadastro automático, crie uma lista numa ferramenta de envio (o *
 - **Nomes de arquivo** sem espaços, sem acentos, sem maiúsculas: `balanca-de-estrelas.jpg`.
 - Se depois de salvar o site aparecer **sem** as seções novas, foi uma aspa ou vírgula faltando. Volte ao `conteudo.js`, clique em **History** e abra a versão anterior para comparar. Ou me chame: eu acho o erro em um minuto.
 
-## 7. O que nunca postar
+## 8. O que nunca postar
 
 - Vídeos ou imagens de **pessoas reais** geradas por IA. Só personagens inventados.
 - Trechos de filmes, músicas gravadas ou capas de editoras — têm direitos autorais.
