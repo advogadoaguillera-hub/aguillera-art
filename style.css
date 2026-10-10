@@ -617,7 +617,7 @@ dialog.leitor::backdrop { background: rgba(5, 3, 15, 0.7); backdrop-filter: blur
 .nav.aberto .hamburguer span:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
 .nav.aberto .hamburguer span:nth-child(2) { opacity: 0; }
 .nav.aberto .hamburguer span:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
-@media (max-width: 1080px) {
+@media (max-width: 1140px) {
   .nav-marca { font-size: 13px; white-space: nowrap; }
   .hamburguer { display: flex; }
   .nav ul {
@@ -630,3 +630,6 @@ dialog.leitor::backdrop { background: rgba(5, 3, 15, 0.7); backdrop-filter: blur
   .nav ul a { display: block; padding: 13px 8px; font-size: 17px; font-family: var(--serif); letter-spacing: 0.08em; border-bottom: 1px solid var(--linha); }
   .nav ul li:last-child a { border-bottom: 0; }
 }
+
+/* link para a Praça: a única cor viva do menu */
+.nav ul a.nav-praca { color: var(--ouro); }
