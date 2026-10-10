@@ -20,6 +20,11 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: cors });
   try {
     const { sala } = await req.json();
+    // só quem está logado pode chamar a voz (evita gasto por gente de fora)
+    const auth = req.headers.get("Authorization") ?? "";
+    const supa = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_ANON_KEY")!, { global: { headers: { Authorization: auth } } });
+    const { data: { user } } = await supa.auth.getUser();
+    if (!user) return json({ erro: "Entre para chamar a voz." }, 401);
     const admin = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!);
 
     // a conversa recente da sala, mais velha primeiro
