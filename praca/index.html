@@ -98,6 +98,19 @@
     dialog h3 { font-family: var(--serif); margin: 0 0 8px; }
     dialog p { color: var(--texto-2); margin: 0 0 21px; }
     dialog button { border: 0; border-radius: 999px; padding: 10px 21px; background: var(--texto); color: #07051a; font-weight: 700; }
+
+    /* a porta: o aviso que proíbe entrar */
+    dialog.porta { width: min(560px, 100% - 32px); padding: 55px 55px 34px; background: #000; border: 1px solid rgba(255,176,32,0.35); }
+    dialog.porta::backdrop { background: #000; }
+    .porta-aviso { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--magenta); margin: 0 0 13px; }
+    dialog.porta h3 { font-size: clamp(24px, 4vw, 34px); line-height: 1.1; margin: 0 0 21px; }
+    dialog.porta h4 { font-family: var(--serif); font-size: 13px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ouro); margin: 34px 0 13px; }
+    dialog.porta ol { margin: 0; padding-left: 21px; color: var(--texto-2); display: flex; flex-direction: column; gap: 8px; }
+    dialog.porta ol b { color: var(--texto); }
+    .porta-voz { font-family: var(--serif); color: var(--ciano) !important; margin: 34px 0 0 !important; }
+    .porta-botoes { display: flex; align-items: center; gap: 21px; margin-top: 34px; }
+    .entrar-praca { background: var(--ouro) !important; }
+    .sair { color: var(--texto-3); font-size: 13px; }
   </style>
 </head>
 <body>
@@ -165,6 +178,24 @@
     </aside>
   </main>
 
+  <dialog class="porta" id="porta">
+    <p class="porta-aviso">Aviso</p>
+    <h3>Este site não deve ser aberto por ninguém.</h3>
+    <p>Não deve ser lido, ouvido, nem compartilhado. Se você entrou, a responsabilidade é sua. Aqui a liberdade de expressão não é brasileira nem minha: é do mundo. Eu sou só um brasileiro com uma cabeça mundial.</p>
+    <h4>A Lei da Praça</h4>
+    <ol>
+      <li><b>Nenhuma conversa pode ter objetivo.</b> Quem chegar a uma conclusão, perde.</li>
+      <li><b>É proibida a ciência.</b> Nada de dado, prova, método ou utilidade. Aqui se pensa como quem olha o céu: filosofia, sociologia, antropologia, arte, delírio.</li>
+      <li><b>Tudo é entretenimento.</b> Nada aqui é conselho, orientação ou verdade. Nada aqui é jurídico.</li>
+      <li><b>A única lei que vale de verdade:</b> ideias podem ser destruídas; pessoas, não. Ódio, ameaça e crime saem da praça.</li>
+    </ol>
+    <p class="porta-voz">Mora aqui uma voz que não é humana. Ela conversa com quem estiver acordado. Ela também não tem objetivo.</p>
+    <div class="porta-botoes">
+      <button class="entrar-praca" onclick="document.getElementById('porta').close()">Entrar mesmo assim</button>
+      <a class="sair" href="../">Obedecer e sair</a>
+    </div>
+  </dialog>
+
   <dialog id="aviso">
     <h3>Isto é uma maquete</h3>
     <p id="aviso-texto">Nesta etapa nada é gravado nem cobrado. Serve para a gente decidir, olhando, se é isso que queremos construir.</p>
@@ -218,6 +249,8 @@
     };
     const MANCHETES = { 'Brasil': ['Yuri, de Belo Horizonte, pagou R$ 20', 'O que a arte deve ao direito, e o que o direito nunca vai pagar à arte?'], 'Mundo': ['Anônimo, de Berlim, pagou R$ 20', 'Qual obra de arte você levaria para um julgamento como testemunha?'] };
     const APOIADORES = [['Yuri · Belo Horizonte', 'R$ 120'], ['Anônimo · Berlim', 'R$ 70'], ['Valentina · Buenos Aires', 'R$ 25'], ['Nenê · Corumbá', 'R$ 5']];
+
+    document.getElementById('porta').showModal();
 
     /* ---------------- relógio e contador ---------------- */
     const total = CIDADES.reduce((s, c) => s + c[3], 0);
