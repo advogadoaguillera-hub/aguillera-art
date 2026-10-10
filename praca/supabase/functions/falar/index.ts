@@ -44,8 +44,10 @@ Deno.serve(async (req) => {
     const { data: ultimo } = await admin.from("posts").select("criado_em").eq("autor", user.id).order("criado_em", { ascending: false }).limit(1);
     if (ultimo?.[0] && Date.now() - new Date(ultimo[0].criado_em).getTime() < 10_000) return json({ erro: "Respira. Um post a cada dez segundos." }, 429);
 
-    // o porteiro
-    const ia = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY")! });
+    // o porteiro (se ainda não houver chave da IA, entra só com a regra de ritmo)
+    const chave = Deno.env.get("ANTHROPIC_API_KEY");
+    if (!chave) return gravar(admin, sala, user.id, t, responde_a);
+    const ia = new Anthropic({ apiKey: chave });
     const r = await ia.messages.create({
       model: "claude-haiku-5-5", max_tokens: 1024,
       output_config: { effort: "low" },
@@ -57,13 +59,18 @@ Deno.serve(async (req) => {
     try { veredito = JSON.parse(saida.match(/\{[\s\S]*\}/)?.[0] ?? "{}"); } catch { /* na dúvida, entra */ }
     if (veredito.entra === false) return json({ erro: veredito.motivo ?? "Isso fere a quarta lei da Praça." }, 422);
 
-    const { data, error } = await admin.from("posts").insert({ sala, autor: user.id, texto: t, responde_a: responde_a ?? null }).select("id").single();
-    if (error) return json({ erro: error.message }, 400);
-    return json({ ok: true, id: data.id });
+    return gravar(admin, sala, user.id, t, responde_a);
   } catch (e) {
     return json({ erro: String(e) }, 500);
   }
 });
+
+// deno-lint-ignore no-explicit-any
+async function gravar(admin: any, sala: string, autor: string, texto: string, responde_a?: number) {
+  const { data, error } = await admin.from("posts").insert({ sala, autor, texto, responde_a: responde_a ?? null }).select("id").single();
+  if (error) return json({ erro: error.message }, 400);
+  return json({ ok: true, id: data.id });
+}
 
 function json(corpo: unknown, status = 200) {
   return new Response(JSON.stringify(corpo), { status, headers: { ...cors, "Content-Type": "application/json" } });
