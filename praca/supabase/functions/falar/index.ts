@@ -47,11 +47,14 @@ Deno.serve(async (req) => {
     // o porteiro
     const ia = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY")! });
     const r = await ia.messages.create({
-      model: "claude-haiku-4-5-20251001", max_tokens: 120, system: LEI,
+      model: "claude-haiku-5-5", max_tokens: 1024,
+      output_config: { effort: "low" },
+      system: LEI,
       messages: [{ role: "user", content: t }],
     });
     let veredito = { entra: true } as { entra: boolean; motivo?: string };
-    try { veredito = JSON.parse((r.content[0] as { text: string }).text.match(/\{[\s\S]*\}/)?.[0] ?? "{}"); } catch { /* na dúvida, entra */ }
+    const saida = r.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("");
+    try { veredito = JSON.parse(saida.match(/\{[\s\S]*\}/)?.[0] ?? "{}"); } catch { /* na dúvida, entra */ }
     if (veredito.entra === false) return json({ erro: veredito.motivo ?? "Isso fere a quarta lei da Praça." }, 422);
 
     const { data, error } = await admin.from("posts").insert({ sala, autor: user.id, texto: t, responde_a: responde_a ?? null }).select("id").single();

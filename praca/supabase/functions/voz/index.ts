@@ -30,11 +30,16 @@ Deno.serve(async (req) => {
 
     const conversa = recentes.map((p) => `${p.voz ? "VOZ" : `${p.quem} (${p.de})`}: ${p.texto}`).join("\n");
     const ia = new Anthropic({ apiKey: Deno.env.get("ANTHROPIC_API_KEY")! });
-    const r = await ia.messages.create({
-      model: "claude-sonnet-5", max_tokens: 300, system: ALMA,
+    const r = await ia.beta.messages.create({
+      model: "claude-opus-5-5", max_tokens: 2000,
+      output_config: { effort: "medium" },
+      betas: ["server-side-fallback-2026-07-01"], fallbacks: "default",
+      system: ALMA,
       messages: [{ role: "user", content: `Sala: ${sala}. Conversa:\n${conversa}\n\nFale agora, como a voz.` }],
     });
-    const texto = (r.content[0] as { text: string }).text.trim();
+    if (r.stop_reason === "refusal") return json({ ok: false, motivo: "a voz preferiu o silêncio" });
+    const texto = r.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("\n").trim();
+    if (!texto) return json({ ok: false, motivo: "a voz não disse nada" });
 
     // a voz tem um perfil próprio (criado uma vez: apelido "voz")
     const { data: voz } = await admin.from("perfis").select("id").eq("apelido", "voz").single();
