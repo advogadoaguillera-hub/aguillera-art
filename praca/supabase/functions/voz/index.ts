@@ -41,10 +41,8 @@ Deno.serve(async (req) => {
     const texto = r.content.filter((b) => b.type === "text").map((b) => (b as { text: string }).text).join("\n").trim();
     if (!texto) return json({ ok: false, motivo: "a voz não disse nada" });
 
-    // a voz tem um perfil próprio (criado uma vez: apelido "voz")
-    const { data: voz } = await admin.from("perfis").select("id").eq("apelido", "voz").single();
-    if (!voz) return json({ erro: "crie o perfil 'voz' primeiro" }, 500);
-    const { error } = await admin.from("posts").insert({ sala, autor: voz.id, texto, voz: true });
+    // a voz não tem conta: posts dela têm autor nulo e voz = true
+    const { error } = await admin.from("posts").insert({ sala, autor: null, texto, voz: true });
     if (error) return json({ erro: error.message }, 400);
     return json({ ok: true, texto });
   } catch (e) {

@@ -51,7 +51,7 @@ on conflict (id) do nothing;
 create table if not exists posts (
   id            bigint generated always as identity primary key,
   sala          text not null references salas(id),
-  autor         uuid not null references perfis(id),
+  autor         uuid references perfis(id),          -- nulo quando quem fala é a voz
   texto         text not null check (char_length(texto) between 1 and 600),
   responde_a    bigint references posts(id),
   destaque_ate  timestamptz,               -- Megafone: Destaque
@@ -127,9 +127,9 @@ create policy "denuncias: criar" on denuncias for insert with check (auth.uid() 
 -- ---------------------------------------------------------------------------
 create or replace view posts_publicos with (security_invoker = true) as
 select p.id, p.sala, p.texto, p.responde_a, p.destaque_ate, p.voz, p.criado_em,
-       case when pf.anonimo then 'Anônimo' else pf.apelido end as quem,
-       coalesce(pf.cidade, pf.estado, pf.pais) as de
-from posts p join perfis pf on pf.id = p.autor
+       case when p.voz then 'a voz' when pf.anonimo then 'Anônimo' else pf.apelido end as quem,
+       case when p.voz then 'a Praça' else coalesce(pf.cidade, pf.estado, pf.pais) end as de
+from posts p left join perfis pf on pf.id = p.autor
 where not p.apagado;
 
 -- tempo real nos posts
