@@ -125,7 +125,7 @@ create policy "denuncias: criar" on denuncias for insert with check (auth.uid() 
 -- ---------------------------------------------------------------------------
 -- Visão pública dos posts: respeita o anonimato
 -- ---------------------------------------------------------------------------
-create or replace view posts_publicos as
+create or replace view posts_publicos with (security_invoker = true) as
 select p.id, p.sala, p.texto, p.responde_a, p.destaque_ate, p.voz, p.criado_em,
        case when pf.anonimo then 'Anônimo' else pf.apelido end as quem,
        coalesce(pf.cidade, pf.estado, pf.pais) as de
