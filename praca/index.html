@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A Praça · quem está online agora</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --espaco: #05030f; --noite: #0c0822; --painel: #140f33; --painel-2: #1c1645;
+      --linha: rgba(255,255,255,0.1); --texto: #f3f0ff; --texto-2: #b9b3d9; --texto-3: #8a84ad;
+      --ouro: #ffb020; --magenta: #ff3d8b; --violeta: #7b5cff; --ciano: #22d3ee; --lima: #a3e635;
+      --serif: 'Cinzel', serif; --sans: 'Space Grotesk', system-ui, sans-serif;
+      --f1: 8px; --f2: 13px; --f3: 21px; --f4: 34px; --f5: 55px;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--espaco); color: var(--texto); font-family: var(--sans); font-size: 15px; line-height: 1.5; min-height: 100vh; }
+    button { font: inherit; cursor: pointer; }
+    a { color: var(--ciano); }
+
+    .maquete { position: fixed; top: 0; left: 50%; transform: translateX(-50%); z-index: 20; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #07051a; background: var(--ouro); padding: 3px 13px; border-radius: 0 0 8px 8px; }
+
+    header.topo { display: flex; align-items: center; justify-content: space-between; gap: 21px; padding: 21px max(16px, calc((100% - 1380px) / 2)) 13px; border-bottom: 1px solid var(--linha); flex-wrap: wrap; }
+    .marca { font-family: var(--serif); font-weight: 700; letter-spacing: 0.14em; font-size: 15px; text-decoration: none; color: var(--texto); }
+    .marca span { color: var(--ouro); }
+    .agora { display: flex; align-items: center; gap: 21px; font-size: 13px; color: var(--texto-2); }
+    .agora b { color: var(--texto); font-size: 21px; font-family: var(--serif); }
+    .pulso { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--lima); box-shadow: 0 0 0 0 rgba(163,230,53,0.6); animation: pulso 1.8s infinite; margin-right: 6px; }
+    @keyframes pulso { 70% { box-shadow: 0 0 0 10px rgba(163,230,53,0); } 100% { box-shadow: 0 0 0 0 rgba(163,230,53,0); } }
+    .relogio { font-variant-numeric: tabular-nums; }
+
+    main { display: grid; grid-template-columns: 1fr 1.618fr 1fr; gap: 21px; padding: 21px max(16px, calc((100% - 1380px) / 2)) 55px; }
+    @media (max-width: 1080px) { main { grid-template-columns: 1fr 1.618fr; } .coluna-dir { grid-column: 1 / -1; } }
+    @media (max-width: 760px) { main { grid-template-columns: 1fr; } }
+
+    .caixa { background: var(--painel); border: 1px solid var(--linha); border-radius: 21px; padding: 21px; }
+    .caixa h2 { margin: 0 0 13px; font-size: 12px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ciano); font-weight: 600; }
+
+    /* trilha de níveis: Mundo › … › Corumbá */
+    .niveis { display: flex; flex-direction: column; gap: 5px; }
+    .nivel { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 13px; border-radius: 13px; border: 1px solid transparent; background: none; color: var(--texto-2); text-align: left; }
+    .nivel small { color: var(--texto-3); font-size: 12px; }
+    .nivel:hover { background: rgba(255,255,255,0.04); color: var(--texto); }
+    .nivel.ativo { background: var(--painel-2); border-color: rgba(255,176,32,0.4); color: var(--texto); }
+    .nivel .ponto { width: 6px; height: 6px; border-radius: 50%; background: var(--lima); flex: none; }
+    .nivel[data-prof="1"] { margin-left: 13px; } .nivel[data-prof="2"] { margin-left: 26px; } .nivel[data-prof="3"] { margin-left: 39px; } .nivel[data-prof="4"] { margin-left: 52px; }
+
+    .globo { position: relative; aspect-ratio: 1; max-height: 70vh; margin: 0 auto; width: 100%; }
+    .globo svg { width: 100%; height: 100%; display: block; }
+    .globo .legenda { position: absolute; left: 13px; bottom: 13px; font-size: 12px; color: var(--texto-3); }
+    .globo .dica { position: absolute; right: 13px; top: 13px; font-size: 12px; color: var(--texto-3); }
+    .trilha { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-family: var(--serif); font-size: 13px; letter-spacing: 0.1em; color: var(--texto-2); margin-bottom: 13px; }
+    .trilha b { color: var(--ouro); }
+
+    /* feed */
+    .sala-titulo { font-family: var(--serif); font-size: 27.5px; margin: 0 0 5px; line-height: 1.1; }
+    .sala-sub { margin: 0 0 21px; color: var(--texto-3); font-size: 13px; }
+    .manchete { border: 1px solid rgba(255,176,32,0.5); background: linear-gradient(135deg, rgba(255,176,32,0.14), rgba(123,92,255,0.1)); border-radius: 13px; padding: 13px 16px; margin-bottom: 13px; }
+    .manchete .selo { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ouro); }
+    .manchete p { margin: 4px 0 0; font-family: var(--serif); font-size: 19px; }
+    .post { padding: 13px 0; border-bottom: 1px solid var(--linha); display: grid; grid-template-columns: 34px 1fr; gap: 13px; }
+    .post .av { width: 34px; height: 34px; border-radius: 50%; background: var(--cor, var(--violeta)); display: grid; place-items: center; font-weight: 700; font-size: 13px; color: #07051a; }
+    .post .quem { font-size: 12px; color: var(--texto-3); }
+    .post .quem b { color: var(--texto-2); font-weight: 600; }
+    .post p { margin: 3px 0 6px; }
+    .post.dourado p { color: var(--ouro); }
+    .post .acoes { display: flex; gap: 13px; font-size: 12px; color: var(--texto-3); }
+    .escrever { margin-top: 13px; display: flex; gap: 8px; }
+    .escrever input { flex: 1; border: 1px solid var(--linha); background: rgba(255,255,255,0.04); color: var(--texto); border-radius: 999px; padding: 12px 18px; font: inherit; outline: none; }
+    .escrever input:focus { border-color: var(--ciano); }
+    .escrever button { border: 0; border-radius: 999px; padding: 0 21px; background: var(--texto); color: #07051a; font-weight: 700; }
+
+    /* trilha sonora + megafone */
+    .tocando { display: grid; grid-template-columns: 55px 1fr; gap: 13px; align-items: center; }
+    .tocando .capa { width: 55px; height: 55px; border-radius: 8px; background: linear-gradient(135deg, var(--magenta), var(--violeta)); display: grid; place-items: center; font-size: 21px; }
+    .tocando .titulo { font-weight: 600; }
+    .tocando .por { font-size: 12px; color: var(--texto-3); }
+    .barras { display: flex; gap: 3px; align-items: flex-end; height: 16px; margin-top: 6px; }
+    .barras i { width: 3px; background: var(--ciano); animation: barra 0.9s ease-in-out infinite; }
+    .barras i:nth-child(2) { animation-delay: .15s } .barras i:nth-child(3) { animation-delay: .3s } .barras i:nth-child(4) { animation-delay: .45s } .barras i:nth-child(5) { animation-delay: .6s }
+    @keyframes barra { 0%,100% { height: 4px } 50% { height: 16px } }
+    .megafone { display: flex; flex-direction: column; gap: 8px; }
+    .plano { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 13px; border-radius: 13px; border: 1px solid var(--linha); background: rgba(255,255,255,0.02); text-align: left; color: var(--texto); }
+    .plano:hover { border-color: var(--ouro); }
+    .plano b { display: block; font-family: var(--serif); }
+    .plano small { color: var(--texto-3); }
+    .plano .preco { font-family: var(--serif); font-size: 21px; color: var(--ouro); }
+    .apoiadores { display: flex; flex-direction: column; gap: 8px; font-size: 13px; }
+    .apoiadores div { display: flex; justify-content: space-between; color: var(--texto-2); }
+    .apoiadores b { color: var(--ouro); font-family: var(--serif); }
+    .nota { font-size: 12px; color: var(--texto-3); margin-top: 13px; }
+
+    dialog { border: 0; border-radius: 21px; padding: 34px; background: var(--painel); color: var(--texto); width: min(440px, 100% - 32px); }
+    dialog::backdrop { background: rgba(5,3,15,0.75); }
+    dialog h3 { font-family: var(--serif); margin: 0 0 8px; }
+    dialog p { color: var(--texto-2); margin: 0 0 21px; }
+    dialog button { border: 0; border-radius: 999px; padding: 10px 21px; background: var(--texto); color: #07051a; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <div class="maquete">Maquete · nada aqui é real ainda</div>
+
+  <header class="topo">
+    <a class="marca" href="../">AGUILLERA <span>·</span> A PRAÇA</a>
+    <div class="agora">
+      <span><span class="pulso"></span><b id="online">—</b> online agora</span>
+      <span class="relogio" id="relogio"></span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="caixa coluna-esq">
+      <h2>Onde você está</h2>
+      <div class="niveis" id="niveis"></div>
+      <p class="nota">Cada lugar é uma sala. Quanto mais perto de casa, mais íntima a conversa. Clique num país no globo para abrir a sala dele.</p>
+    </aside>
+
+    <section class="coluna-centro">
+      <div class="trilha" id="trilha"></div>
+      <div class="globo caixa" style="padding:0; overflow:hidden">
+        <svg id="mapa" viewBox="0 0 800 800" aria-label="Globo com quem está online"></svg>
+        <span class="dica">arraste · clique num país</span>
+        <span class="legenda"><span class="pulso"></span>cada ponto é gente online</span>
+      </div>
+      <div class="caixa" style="margin-top:21px">
+        <h3 class="sala-titulo" id="sala-titulo"></h3>
+        <p class="sala-sub" id="sala-sub"></p>
+        <div id="manchete"></div>
+        <div id="feed"></div>
+        <form class="escrever" onsubmit="return false">
+          <input id="texto" placeholder="Diga qualquer coisa. Aqui é livre." maxlength="280">
+          <button type="button" onclick="document.getElementById('aviso').showModal()">Falar</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="coluna-dir">
+      <div class="caixa">
+        <h2>Tocando para quem está online</h2>
+        <div class="tocando">
+          <div class="capa">♪</div>
+          <div>
+            <div class="titulo" id="musica-titulo">Nenhuma música no ar</div>
+            <div class="por" id="musica-por">A próxima pode ser a sua.</div>
+            <div class="barras"><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="caixa" style="margin-top:21px">
+        <h2>Megafone</h2>
+        <div class="megafone">
+          <button class="plano" onclick="megafone('Destaque')"><span><b>Destaque</b><small>Seu post fica em dourado por 1 hora</small></span><span class="preco">R$ 5</span></button>
+          <button class="plano" onclick="megafone('Manchete')"><span><b>Manchete</b><small>Seu título fica no topo da sala por 6 horas</small></span><span class="preco">R$ 20</span></button>
+          <button class="plano" onclick="megafone('Trilha')"><span><b>Trilha</b><small>Sua música toca para quem está online, por 1 hora</small></span><span class="preco">R$ 50</span></button>
+        </div>
+        <p class="nota">Quem paga escolhe o assunto. Quem não paga fala do mesmo jeito — só não grita.</p>
+      </div>
+      <div class="caixa" style="margin-top:21px">
+        <h2>Quem mais apoiou a Praça</h2>
+        <div class="apoiadores" id="apoiadores"></div>
+      </div>
+    </aside>
+  </main>
+
+  <dialog id="aviso">
+    <h3>Isto é uma maquete</h3>
+    <p id="aviso-texto">Nesta etapa nada é gravado nem cobrado. Serve para a gente decidir, olhando, se é isso que queremos construir.</p>
+    <button onclick="document.getElementById('aviso').close()">Entendi</button>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+  <script>
+    /* ---------------- dados de mentira, só para a maquete ---------------- */
+    const NIVEIS = [
+      { nome: 'Mundo', sub: 'Todo mundo que está acordado agora', centro: [-30, 10], escala: 1, prof: 0, online: 0 },
+      { nome: 'América do Sul', sub: 'Do Caribe à Patagônia', centro: [-60, -18], escala: 2.1, prof: 1 },
+      { nome: 'Brasil', sub: 'A sala em português', centro: [-53, -14], escala: 3.1, prof: 2 },
+      { nome: 'Mato Grosso do Sul', sub: 'Pantanal, cerrado e fronteira', centro: [-55, -20.5], escala: 7, prof: 3 },
+      { nome: 'Corumbá', sub: 'A cidade. A última sala, a mais perto de casa', centro: [-57.65, -19.0], escala: 15, prof: 4 },
+    ];
+    const CIDADES = [
+      ['Corumbá', -57.65, -19.0, 4], ['Campo Grande', -54.6, -20.45, 11], ['São Paulo', -46.6, -23.55, 83], ['Rio de Janeiro', -43.2, -22.9, 41],
+      ['Brasília', -47.9, -15.8, 17], ['Recife', -34.9, -8.05, 12], ['Manaus', -60.0, -3.1, 6], ['Porto Alegre', -51.2, -30.0, 14],
+      ['Buenos Aires', -58.4, -34.6, 22], ['Lima', -77.0, -12.05, 9], ['Bogotá', -74.1, 4.7, 13], ['Cidade do México', -99.1, 19.4, 27],
+      ['Nova York', -74.0, 40.7, 54], ['Los Angeles', -118.2, 34.05, 31], ['Lisboa', -9.14, 38.7, 19], ['Madri', -3.7, 40.4, 16],
+      ['Paris', 2.35, 48.85, 24], ['Londres', -0.12, 51.5, 38], ['Berlim', 13.4, 52.5, 15], ['Roma', 12.5, 41.9, 10],
+      ['Lagos', 3.4, 6.5, 12], ['Joanesburgo', 28.0, -26.2, 8], ['Cairo', 31.2, 30.05, 9], ['Istambul', 29.0, 41.0, 11],
+      ['Mumbai', 72.9, 19.1, 29], ['Tóquio', 139.7, 35.7, 44], ['Seul', 127.0, 37.55, 21], ['Xangai', 121.5, 31.2, 33],
+      ['Jacarta', 106.8, -6.2, 18], ['Sydney', 151.2, -33.9, 13], ['Luanda', 13.2, -8.8, 7], ['Maputo', 32.6, -25.95, 4],
+    ];
+    const POSTS = {
+      'Mundo': [
+        ['Yuki', 'Tóquio', 'Alguém mais acha que a estátua da Justiça com venda é a escultura mais honesta já feita? Ela admite que não quer ver.', '#22d3ee'],
+        ['Amara', 'Lagos', 'Pergunta aleatória das 3 da manhã: arte precisa ser entendida ou só sentida?', '#ff3d8b'],
+        ['Tomás', 'Lisboa', 'Hoje descobri que Kafka pediu para queimarem O Processo. O amigo não queimou. Qual é o estatuto jurídico de uma obra-prima desobediente?', '#ffb020'],
+      ],
+      'América do Sul': [
+        ['Valentina', 'Buenos Aires', 'O tango é a única arte que nasceu de uma briga de bairro e virou patrimônio. Discutam.', '#a3e635'],
+        ['Mateo', 'Bogotá', 'Botero pintou todo mundo gordo pra dizer que o poder incha. Nunca vi crítica mais clara.', '#7b5cff'],
+      ],
+      'Brasil': [
+        ['Jocsan', 'Corumbá', 'A primeira música que vai tocar nesta praça vai ser do Legião. Quem apoiar, escolhe a próxima.', '#ffb020', true],
+        ['Bia', 'São Paulo', 'Crítica louca do dia: todo contrato é uma pintura abstrata que as duas partes juram que é figurativa.', '#ff3d8b'],
+        ['Rafa', 'Recife', 'Alguém online em Recife? Chove e eu queria discutir Portinari com estranhos.', '#22d3ee'],
+      ],
+      'Mato Grosso do Sul': [
+        ['Dona Zélia', 'Campo Grande', 'Conceição dos Bugres esculpia o povo que ninguém olhava. Isso é arte ou é processo?', '#a3e635'],
+        ['Lucas', 'Dourados', 'Vocês viram o pôr do sol hoje? O Pantanal é a única galeria que muda de obra todo dia.', '#7b5cff'],
+      ],
+      'Corumbá': [
+        ['Jocsan', 'Corumbá', 'Esta sala é a última do mapa, e é a nossa. Quem está acordado em Corumbá às 3 da manhã?', '#ffb020'],
+        ['Nenê', 'Corumbá', 'Eu. Olhando o rio e ouvindo rádio. A Praça devia ter uma rádio.', '#22d3ee'],
+      ],
+    };
+    const MANCHETES = { 'Brasil': ['Yuri, de Belo Horizonte, pagou R$ 20', 'O que a arte deve ao direito, e o que o direito nunca vai pagar à arte?'], 'Mundo': ['Anônimo, de Berlim, pagou R$ 20', 'Qual obra de arte você levaria para um julgamento como testemunha?'] };
+    const APOIADORES = [['Yuri · Belo Horizonte', 'R$ 120'], ['Anônimo · Berlim', 'R$ 70'], ['Valentina · Buenos Aires', 'R$ 25'], ['Nenê · Corumbá', 'R$ 5']];
+
+    /* ---------------- relógio e contador ---------------- */
+    const total = CIDADES.reduce((s, c) => s + c[3], 0);
+    document.getElementById('online').textContent = total.toLocaleString('pt-BR');
+    setInterval(() => { const n = total + Math.round((Math.random() - 0.5) * 6); document.getElementById('online').textContent = n.toLocaleString('pt-BR'); }, 4000);
+    function relogio() {
+      const d = new Date();
+      document.getElementById('relogio').textContent = d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) + ' em Corumbá';
+    }
+    relogio(); setInterval(relogio, 15000);
+
+    /* ---------------- salas ---------------- */
+    const caixaNiveis = document.getElementById('niveis');
+    NIVEIS.forEach((n, i) => {
+      const b = document.createElement('button');
+      b.className = 'nivel'; b.dataset.prof = n.prof;
+      const gente = i === 0 ? total : CIDADES.filter(c => dentro(c, i)).reduce((s, c) => s + c[3], 0);
+      b.innerHTML = `<span><span class="ponto"></span> ${n.nome}</span><small>${gente}</small>`;
+      b.addEventListener('click', () => irPara(i));
+      caixaNiveis.append(b);
+    });
+    function dentro(c, i) {
+      const [, lon, lat] = c;
+      if (i === 1) return lon < -34 && lon > -82 && lat < 13 && lat > -56;
+      if (i === 2) return lon < -34 && lon > -74 && lat < 6 && lat > -34;
+      if (i === 3) return c[0] === 'Campo Grande' || c[0] === 'Corumbá';
+      if (i === 4) return c[0] === 'Corumbá';
+      return true;
+    }
+    function mostrarSala(nome, sub, idx) {
+      document.getElementById('sala-titulo').textContent = nome;
+      document.getElementById('sala-sub').textContent = sub;
+      document.querySelectorAll('.nivel').forEach((b, k) => b.classList.toggle('ativo', k === idx));
+      document.getElementById('trilha').innerHTML = NIVEIS.slice(0, (idx ?? 0) + 1).map((n, k, arr) => k === arr.length - 1 ? `<b>${n.nome}</b>` : `<span>${n.nome}</span><span>›</span>`).join('') + (idx == null ? `<span>›</span><b>${nome}</b>` : '');
+      const m = MANCHETES[nome];
+      document.getElementById('manchete').innerHTML = m ? `<div class="manchete"><span class="selo">Manchete · ${m[0]}</span><p>${m[1]}</p></div>` : '';
+      const posts = POSTS[nome] || [];
+      document.getElementById('feed').innerHTML = posts.length ? posts.map(([q, de, t, cor, dourado]) => `
+        <article class="post ${dourado ? 'dourado' : ''}" style="--cor:${cor}">
+          <div class="av">${q[0]}</div>
+          <div><div class="quem"><b>${q}</b> · ${de} · agora</div><p>${t}</p><div class="acoes"><span>↑ ${Math.round(Math.random() * 40)}</span><span>responder</span>${dourado ? '<span style="color:var(--ouro)">★ destaque pago</span>' : ''}</div></div>
+        </article>`).join('') : `<p class="nota">Ainda ninguém falou aqui. Você seria o primeiro.</p>`;
+      const mus = nome === 'Brasil' || nome === 'Mundo';
+      document.getElementById('musica-titulo').textContent = mus ? 'Legião Urbana — Quase Sem Querer' : 'Nenhuma música no ar';
+      document.getElementById('musica-por').textContent = mus ? 'Escolhida por Jocsan · Corumbá · toca por mais 41 min · via YouTube' : 'A próxima pode ser a sua.';
+    }
+    document.getElementById('apoiadores').innerHTML = APOIADORES.map(([q, v]) => `<div><span>${q}</span><b>${v}</b></div>`).join('');
+    function megafone(tipo) {
+      document.getElementById('aviso-texto').textContent = `"${tipo}" entra na próxima etapa, com pagamento por PIX. Na maquete, serve para a gente ver onde o botão fica e o que ele promete.`;
+      document.getElementById('aviso').showModal();
+    }
+
+    /* ---------------- globo ---------------- */
+    const svg = d3.select('#mapa'), L = 800;
+    const proj = d3.geoOrthographic().translate([L / 2, L / 2]).clipAngle(90);
+    const caminho = d3.geoPath(proj);
+    let paises, escalaBase = L / 2.15, rot = [30, -10], esc = 1, girando = true, nivelAtual = 0;
+    svg.append('circle').attr('cx', L / 2).attr('cy', L / 2).attr('r', escalaBase).attr('fill', '#0a0722').attr('stroke', 'rgba(34,211,238,0.35)');
+    const g = svg.append('g');
+    const gPaises = g.append('g'), gPontos = g.append('g');
+    function desenhar() {
+      proj.rotate(rot).scale(escalaBase * esc);
+      svg.select('circle').attr('r', escalaBase * esc);
+      gPaises.selectAll('path').attr('d', caminho);
+      gPontos.selectAll('g').attr('transform', d => { const p = proj([d[1], d[2]]); return p ? `translate(${p[0]},${p[1]})` : 'translate(-99,-99)'; })
+        .style('display', d => d3.geoDistance([d[1], d[2]], [-rot[0], -rot[1]]) > Math.PI / 2 - 0.05 ? 'none' : null);
+    }
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(mundo => {
+      paises = topojson.feature(mundo, mundo.objects.countries).features;
+      gPaises.selectAll('path').data(paises).join('path')
+        .attr('fill', '#1c1645').attr('stroke', 'rgba(255,255,255,0.18)').attr('stroke-width', 0.6)
+        .style('cursor', 'pointer')
+        .on('mouseenter', function () { d3.select(this).attr('fill', '#2a2160'); })
+        .on('mouseleave', function () { d3.select(this).attr('fill', '#1c1645'); })
+        .on('click', (ev, d) => { const c = d3.geoCentroid(d); girando = false; animar(c, 3, () => mostrarSala(d.properties.name, 'Sala aberta pelo globo', null)); });
+      const pt = gPontos.selectAll('g').data(CIDADES).join('g');
+      pt.append('circle').attr('r', d => 2 + Math.sqrt(d[3]) * 0.9).attr('fill', 'rgba(163,230,53,0.25)');
+      pt.append('circle').attr('r', 2.2).attr('fill', '#a3e635');
+      pt.append('title').text(d => `${d[0]} · ${d[3]} online`);
+      desenhar();
+      mostrarSala(NIVEIS[0].nome, NIVEIS[0].sub, 0);
+    });
+    d3.timer(() => { if (girando) { rot[0] += 0.08; desenhar(); } });
+    svg.call(d3.drag().on('start', () => { girando = false; }).on('drag', (ev) => { rot[0] += ev.dx * 0.3 / esc; rot[1] = Math.max(-80, Math.min(80, rot[1] - ev.dy * 0.3 / esc)); desenhar(); }));
+    function animar(centro, escala, fim) {
+      const r0 = rot.slice(), r1 = [-centro[0], -centro[1]], e0 = esc;
+      const ir = d3.interpolate(r0, r1), ie = d3.interpolate(e0, escala);
+      d3.transition().duration(1400).ease(d3.easeCubicInOut).tween('zoom', () => t => { rot = ir(t); esc = ie(t); desenhar(); }).on('end', fim);
+    }
+    function irPara(i) {
+      girando = false; nivelAtual = i;
+      animar(NIVEIS[i].centro, NIVEIS[i].escala, () => { if (i === 0) girando = true; });
+      mostrarSala(NIVEIS[i].nome, NIVEIS[i].sub, i);
+    }
+  </script>
+</body>
+</html>
