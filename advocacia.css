@@ -1,0 +1,178 @@
+/* ==========================================================================
+   Jocsan Aguillera · Advocacia — páginas clássicas (civil e criminal)
+   Independente do style.css do site cultural.
+   ========================================================================== */
+
+:root {
+  --tinta: #1b1f24;
+  --carvao: #14171b;
+  --grafite: #2b3038;
+  --cinza: #5c6168;
+  --cinza-claro: #8a8f96;
+  --papel: #f6f3ed;
+  --branco: #ffffff;
+  --linha: #e4ded2;
+  --ouro: #a98b45;
+  --ouro-claro: #d9c48f;
+  --serif: 'Cormorant Garamond', 'Georgia', 'Times New Roman', serif;
+  --sans: 'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--papel); color: var(--tinta);
+  font-family: var(--sans); font-size: 17px; line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: var(--ouro); }
+.miolo { width: min(1120px, 100% - 40px); margin-inline: auto; }
+
+/* ---------- Cabeçalho ---------- */
+.topo {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--carvao); color: var(--branco);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.topo .miolo { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 76px; }
+.marca { color: var(--branco); text-decoration: none; display: flex; flex-direction: column; line-height: 1.1; }
+.marca b { font-family: var(--serif); font-weight: 600; font-size: 22px; letter-spacing: 0.16em; text-transform: uppercase; white-space: nowrap; }
+.marca small { font-size: 11px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ouro-claro); margin-top: 4px; }
+.topo nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; }
+.topo nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; white-space: nowrap; }
+.topo nav a:hover, .topo nav a.ativo { color: var(--ouro-claro); }
+.topo .fone { color: var(--branco); text-decoration: none; font-weight: 600; white-space: nowrap; font-size: 15px; }
+@media (max-width: 900px) {
+  .topo .miolo { flex-wrap: wrap; padding: 12px 0; }
+  .topo nav { width: 100%; }
+  .topo nav ul { flex-wrap: wrap; gap: 10px 18px; }
+  .topo nav a { font-size: 12px; }
+  .topo .fone { display: none; }
+}
+
+/* ---------- Faixa de abertura ---------- */
+.faixa {
+  position: relative; color: var(--branco); text-align: center;
+  padding: 96px 0 88px; overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 120%, rgba(169,139,69,0.28), transparent 60%),
+    repeating-linear-gradient(135deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 14px),
+    linear-gradient(180deg, #1d2127, #121518);
+}
+.faixa::after { content: ""; position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); width: 120px; height: 3px; background: var(--ouro); }
+.faixa .sobre { font-size: 12px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--ouro-claro); margin: 0 0 18px; }
+.faixa h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(38px, 6vw, 68px); letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 14px; line-height: 1.05; }
+.faixa .sub { font-family: var(--serif); font-size: clamp(20px, 2.6vw, 28px); font-style: italic; color: rgba(255,255,255,0.85); margin: 0 auto 26px; max-width: 32ch; line-height: 1.3; }
+.faixa p.chamada { max-width: 66ch; margin: 0 auto; color: rgba(255,255,255,0.78); font-size: 17px; }
+.faixa .acoes { margin-top: 34px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-block; padding: 14px 30px; text-decoration: none; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600;
+  border: 1px solid var(--ouro); color: var(--ouro); background: transparent; transition: background 0.2s, color 0.2s;
+}
+.btn:hover { background: var(--ouro); color: var(--branco); }
+.btn.cheio { background: var(--ouro); color: var(--branco); }
+.btn.cheio:hover { background: #8f7437; border-color: #8f7437; }
+.btn.escuro { border-color: var(--tinta); color: var(--tinta); }
+.btn.escuro:hover { background: var(--tinta); color: var(--branco); }
+
+/* ---------- Seções ---------- */
+section { padding: 84px 0; }
+section.branca { background: var(--branco); }
+section.escura { background: var(--carvao); color: var(--branco); }
+.titulo { text-align: center; margin: 0 0 14px; font-family: var(--serif); font-weight: 600; font-size: clamp(30px, 4vw, 44px); letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.1; }
+.titulo::after { content: ""; display: block; width: 64px; height: 2px; background: var(--ouro); margin: 18px auto 0; }
+.intro { text-align: center; max-width: 72ch; margin: 0 auto 48px; color: var(--cinza); font-size: 18px; }
+section.escura .intro { color: rgba(255,255,255,0.78); }
+
+/* ---------- Áreas de atuação ---------- */
+.areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 40px; }
+.area { text-align: center; }
+.area .icone { width: 54px; height: 54px; margin: 0 auto 16px; color: var(--ouro); }
+.area .icone svg { width: 100%; height: 100%; stroke: currentColor; fill: none; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.area h3 { font-family: var(--serif); font-weight: 600; font-size: 24px; margin: 0 0 8px; letter-spacing: 0.02em; }
+.area p { margin: 0; color: var(--cinza); font-size: 16px; }
+section.escura .area p { color: rgba(255,255,255,0.78); }
+.area.destaque { grid-column: 1 / -1; padding: 36px 40px; border: 1px solid var(--ouro); background: rgba(169,139,69,0.06); }
+.area.destaque h3 { font-size: 30px; }
+.area.destaque p { max-width: 80ch; margin-inline: auto; font-size: 17px; }
+.area.destaque ul { list-style: none; padding: 0; margin: 18px auto 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 10px; max-width: 900px; }
+.area.destaque li { font-size: 14px; letter-spacing: 0.04em; border: 1px solid var(--linha); background: var(--branco); padding: 6px 14px; color: var(--grafite); }
+section.escura .area.destaque li { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); }
+@media (max-width: 900px) { .areas { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .areas { grid-template-columns: 1fr; gap: 30px; } .area.destaque { padding: 26px 18px; } }
+
+/* ---------- Advogado ---------- */
+.advogado { display: grid; grid-template-columns: 1fr 1.4fr; gap: 56px; align-items: center; }
+.advogado .placa { border: 1px solid var(--linha); background: var(--branco); padding: 36px; text-align: center; }
+.advogado .placa .mono { font-family: var(--serif); font-size: 64px; line-height: 1; color: var(--ouro); letter-spacing: 0.1em; }
+.advogado .placa strong { display: block; font-family: var(--serif); font-size: 28px; font-weight: 600; margin-top: 14px; letter-spacing: 0.04em; }
+.advogado .placa small { display: block; color: var(--cinza); letter-spacing: 0.18em; text-transform: uppercase; font-size: 12px; margin-top: 8px; }
+.advogado .placa hr { border: 0; border-top: 1px solid var(--linha); margin: 20px 0; }
+.advogado .placa p { margin: 0; color: var(--cinza); font-size: 15px; }
+.advogado h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(28px, 3.4vw, 38px); margin: 0 0 16px; line-height: 1.15; }
+.advogado p { color: var(--grafite); margin: 0 0 14px; }
+@media (max-width: 800px) { .advogado { grid-template-columns: 1fr; gap: 30px; } }
+
+/* ---------- Método ---------- */
+.metodo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; counter-reset: m; }
+.metodo article { border-top: 2px solid var(--ouro); padding-top: 18px; }
+.metodo article::before { counter-increment: m; content: "0" counter(m); display: block; font-family: var(--serif); font-size: 34px; color: var(--ouro); line-height: 1; margin-bottom: 10px; }
+.metodo h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; margin: 0 0 8px; }
+.metodo p { margin: 0; color: var(--cinza); font-size: 16px; }
+@media (max-width: 760px) { .metodo { grid-template-columns: 1fr; } }
+
+/* ---------- Publicações / textos ---------- */
+.textos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+.texto { background: var(--branco); color: var(--tinta); border: 1px solid var(--linha); padding: 30px 28px; display: flex; flex-direction: column; }
+.texto .tema { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ouro); margin: 0 0 12px; }
+.texto h3 { font-family: var(--serif); font-size: 24px; font-weight: 600; line-height: 1.2; margin: 0 0 10px; }
+.texto p { color: var(--cinza); font-size: 15.5px; margin: 0 0 18px; }
+.texto a { margin-top: auto; text-decoration: none; font-size: 13px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; }
+@media (max-width: 900px) { .textos { grid-template-columns: 1fr; } }
+
+.artigo { max-width: 76ch; margin: 0 auto 64px; padding-bottom: 48px; border-bottom: 1px solid var(--linha); }
+.artigo:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+.artigo .tema { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ouro); margin: 0 0 10px; }
+.artigo h3 { font-family: var(--serif); font-size: clamp(28px, 3.4vw, 36px); font-weight: 600; line-height: 1.15; margin: 0 0 18px; }
+.artigo p { color: var(--grafite); margin: 0 0 16px; font-size: 17.5px; }
+.artigo p.lei { font-family: var(--serif); font-style: italic; font-size: 19px; border-left: 2px solid var(--ouro); padding-left: 18px; color: var(--tinta); }
+.artigo .fontes { font-size: 13.5px; color: var(--cinza-claro); }
+
+/* ---------- Perguntas ---------- */
+.perguntas { max-width: 820px; margin: 0 auto; }
+.perguntas details { border-bottom: 1px solid var(--linha); padding: 16px 0; }
+.perguntas summary { cursor: pointer; list-style: none; font-family: var(--serif); font-size: 22px; font-weight: 600; display: flex; justify-content: space-between; gap: 16px; }
+.perguntas summary::after { content: "+"; color: var(--ouro); font-size: 26px; line-height: 1; }
+.perguntas details[open] summary::after { content: "–"; }
+.perguntas details p { color: var(--grafite); margin: 10px 0 0; }
+
+/* ---------- Contato ---------- */
+.contato { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
+.contato h3 { font-family: var(--serif); font-size: 26px; font-weight: 600; margin: 0 0 18px; }
+.contato dl { margin: 0; }
+.contato dt { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ouro); margin-top: 18px; }
+.contato dd { margin: 4px 0 0; color: var(--grafite); }
+.contato dd a { color: var(--tinta); text-decoration: none; border-bottom: 1px solid var(--ouro); }
+.contato .acoes { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+.contato iframe { width: 100%; height: 360px; border: 0; filter: grayscale(1) contrast(1.05); border: 1px solid var(--linha); }
+@media (max-width: 800px) { .contato { grid-template-columns: 1fr; } }
+
+/* ---------- Rodapé ---------- */
+footer { background: var(--carvao); color: rgba(255,255,255,0.7); padding: 40px 0; font-size: 14px; }
+footer .miolo { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; align-items: center; }
+footer a { color: var(--ouro-claro); text-decoration: none; }
+footer .aviso { width: 100%; margin-top: 18px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12.5px; color: rgba(255,255,255,0.5); }
+
+/* ---------- WhatsApp flutuante ---------- */
+.zap {
+  position: fixed; right: 18px; bottom: 18px; z-index: 50; width: 56px; height: 56px; border-radius: 50%;
+  background: #25d366; display: grid; place-items: center; box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+.zap svg { width: 30px; height: 30px; fill: #fff; }
+
+.areas.quatro { grid-template-columns: repeat(4, 1fr); gap: 30px 28px; }
+@media (max-width: 900px) { .areas.quatro { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 600px) { .areas.quatro { grid-template-columns: 1fr; } }
