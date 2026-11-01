@@ -54,3 +54,15 @@ O site é informativo e cultural. Ele mostra o nome e a inscrição na OAB, não
 ## Privacidade (LGPD)
 
 O site não tem formulário, cookies nem analytics, então não precisa de banner de cookies. Se um dia acrescentar Google Analytics ou um formulário, publique também uma política de privacidade.
+
+## Área do Cliente (sistema do escritório)
+
+- O menu e as páginas de advocacia levam a **`https://area.aguillera.art.br`**, o sistema do
+  escritório: cadastro, processos, mensagens, documentos e pagamentos. O código dele está no
+  repositório `meu-primeiro-repo`, pasta `app/`.
+- Os botões **Cadastre-se e envie seu caso** abrem o cadastro com a área já marcada
+  (`?area=civel` ou `?area=criminal`) e anotam a origem (`&origem=site-civel`).
+- `area-cliente.js` conta as visitas para a aba **Site** do painel do escritório. Não usa
+  cookie e não guarda dado pessoal. O endereço do sistema fica numa linha no topo do arquivo.
+- Enquanto `area.aguillera.art.br` não estiver no ar, os botões levam a uma página que não
+  abre e o contador simplesmente não registra nada. O site em si não é afetado.
