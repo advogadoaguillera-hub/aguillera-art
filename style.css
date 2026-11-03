@@ -631,3 +631,7 @@ dialog.leitor::backdrop { background: rgba(5, 3, 15, 0.7); backdrop-filter: blur
   .nav ul li:last-child a { border-bottom: 0; }
 }
 
+
+/* Área do Cliente: botão de destaque no menu (página inicial e Livros) */
+.nav ul a.nav-area { color: var(--ouro); border: 1px solid var(--ouro); border-radius: 999px; padding: 6px 14px; white-space: nowrap; }
+.nav ul a.nav-area:hover { background: var(--ouro); color: #000; }

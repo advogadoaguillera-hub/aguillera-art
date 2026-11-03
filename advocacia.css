@@ -176,3 +176,19 @@ footer .aviso { width: 100%; margin-top: 18px; padding-top: 18px; border-top: 1p
 .areas.quatro { grid-template-columns: repeat(4, 1fr); gap: 30px 28px; }
 @media (max-width: 900px) { .areas.quatro { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .areas.quatro { grid-template-columns: 1fr; } }
+
+/* Área do Cliente: botão de destaque no menu das páginas de advocacia */
+.topo nav a.nav-area { color: var(--ouro-claro); border: 1px solid var(--ouro-claro); border-radius: 999px; padding: 5px 12px; }
+.topo nav a.nav-area:hover { background: var(--ouro-claro); color: var(--tinta); }
+
+/* ---------- Sobre: retrato e formulário "Conte seu caso" ---------- */
+.advogado .retrato { width: 100%; height: auto; aspect-ratio: 4 / 5; object-fit: cover; border: 1px solid var(--linha); }
+.caso { max-width: 760px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 18px 20px; }
+.caso label { display: grid; gap: 6px; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ouro); }
+.caso input, .caso select, .caso textarea { font: inherit; font-size: 16px; letter-spacing: 0; text-transform: none; color: var(--tinta); background: var(--branco); border: 1px solid var(--linha); padding: 12px 14px; border-radius: 0; }
+.caso input:focus, .caso select:focus, .caso textarea:focus { outline: 2px solid var(--ouro); outline-offset: 1px; }
+.caso .largo { grid-column: 1 / -1; }
+.caso .nota { margin: 0; font-size: 13px; color: var(--cinza); }
+.caso .erro { margin: 0; color: #9b2c2c; font-size: 14px; min-height: 1em; }
+.caso button { justify-self: start; cursor: pointer; }
+@media (max-width: 640px) { .caso { grid-template-columns: 1fr; } }

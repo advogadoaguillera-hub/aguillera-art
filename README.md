@@ -54,3 +54,20 @@ O site é informativo e cultural. Ele mostra o nome e a inscrição na OAB, não
 ## Privacidade (LGPD)
 
 O site não tem formulário, cookies nem analytics, então não precisa de banner de cookies. Se um dia acrescentar Google Analytics ou um formulário, publique também uma política de privacidade.
+
+## Área do Cliente (guardada para depois)
+
+O arquivo `area-cliente.js` e os estilos `.nav-area` estão prontos para quando o sistema do
+escritório (repositório `meu-primeiro-repo`, pasta `app/`) for ao ar em
+`https://area.aguillera.art.br`. Os botões "Área do Cliente" e "Cadastre-se e envie seu caso"
+foram retirados das páginas até lá; o histórico do Git guarda a versão com eles
+(commit "Liga o site à Área do Cliente e conta as visitas").
+
+## Página Sobre e "Conte seu caso"
+
+- `sobre/` — retrato, formação, idiomas e método. Instituições e anos de conclusão ainda
+  podem ser acrescentados.
+- `conte-seu-caso.js` — o formulário da página Sobre monta a mensagem e abre o WhatsApp do
+  escritório. Nada fica gravado no site.
+- As páginas de advocacia, Livros e Sobre passaram a ser medidas pelo Umami, com os cliques no
+  WhatsApp contados como eventos (`whatsapp civel`, `whatsapp criminal`…).
